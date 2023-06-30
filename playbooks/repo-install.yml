@@ -45,6 +45,15 @@
   gather_facts: false
   user: root
   tasks:
+    # TODO(jcapitao): remove the installation below once
+    # https://bugzilla.redhat.com/show_bug.cgi?id=2183279 is fixed
+    - name: Install systemd-udev-252-15.el9
+      package:
+        name: systemd-udev-252-15.el9
+        state: present
+      when:
+        - ansible_facts['pkg_mgr'] == 'dnf'
+
     - name: Create gluster cluster
       include_role:
         name: openstack.osa.glusterfs
